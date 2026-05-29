@@ -10,7 +10,7 @@ pipeline {
         stage('1. Build') {
             steps {
                 echo 'Installing project dependencies on Windows environment...'
-                bat 'npm install' 
+                bat 'npm install --include=dev' 
             }
         }
 
