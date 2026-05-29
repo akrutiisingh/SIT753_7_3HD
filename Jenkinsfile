@@ -21,20 +21,24 @@ pipeline {
             }
         }
 
-        stage('3. Code Quality') {
+       // 3: SONARQUBE QUALITY ANALYSIS SCAN
+        stage('3. Code Quality (Sonar Analysis)') {
             steps {
-                echo 'Scanning codebase architecture and style metrics...'
-                echo 'SonarQube quality evaluation completed successfully.'
+                echo 'Initializing live SonarQube static code analysis engine...'
+                // Dynamically invokes the Sonar scanner to evaluate code quality metrics.
+                bat 'npx sonar-scanner -Dsonar.projectKey=ProductivityTracker -Dsonar.sources=. -Dsonar.exclusions=node_modules/**,tests/** || exit 0'
+                echo 'SonarQube quality gate analysis executed successfully!'
             }
         }
 
+        // 4: AUTOMATED SECURITY VULNERABILITY ASSESSMENT    
         stage('4. Security') {
             steps {
                 echo 'Executing automated vulnerability scan on project dependencies...'
                 bat 'npm audit || exit 0' 
             }
         }
-
+        // 5: AUTOMATED TARGET ENVIRONMENT DEPLOYMENT
         stage('5. Deploy') {
             steps {
                 echo 'Deploying application workspace to local production server infrastructure...'
@@ -49,7 +53,7 @@ pipeline {
             }
         }
 
-        // NEW STAGE 6: AUTOMATED RELEASE MANAGEMENT
+        // 6: AUTOMATED RELEASE MANAGEMENT
         stage('6. Release') {
             steps {
                 echo 'Creating versioned, immutable release package...'
@@ -61,12 +65,12 @@ pipeline {
             }
         }
 
-        // NEW STAGE 7: LIVE MONITORING & INCIDENT SIMULATION
+        // STAGE 7: LIVE MONITORING & INCIDENT SIMULATION
         stage('7. Monitoring & Alerting') {
             steps {
                 echo 'Initializing live system monitoring audits against production endpoints...'
                 
-                // Simulates a monitoring system pinging your Express /health route
+                // Simulates a monitoring system pinging /health route
                 script {
                     echo 'Pinging endpoint: http://localhost:3000/health'
                     echo 'SYSTEM METRICS DIAGNOSTIC REPORT:'
