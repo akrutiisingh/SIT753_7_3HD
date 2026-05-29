@@ -35,9 +35,8 @@ pipeline {
         stage('4. Security') {
             steps {
                 echo 'Executing automated vulnerability scan on project dependencies...'
-                // runs a scan on your package.json vulnerabilities. 
-                // The "|| true" ensures the pipeline doesn't crash if warnings are found, allowing you to discuss them in your report!
-                bat 'npm audit || true' 
+                // CHANGED: Used '|| exit 0' to handle Windows fallback smoothly
+                bat 'npm audit || exit 0' 
             }
         }
 
