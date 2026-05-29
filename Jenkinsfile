@@ -12,7 +12,7 @@ pipeline {
             steps {
                 echo 'Installing project dependencies...'
                 // Using standard npm install which runs directly on your machine's environment
-                sh 'npm install' 
+                bat 'npm install' 
             }
         }
 
@@ -20,7 +20,7 @@ pipeline {
         stage('2. Test') {
             steps {
                 echo 'Executing automated validation testing suite...'
-                sh 'npm test' 
+                bat 'npm test' 
             }
         }
 
